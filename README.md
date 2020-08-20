@@ -2,7 +2,7 @@
 
 ### Smartshop.lk Web Client Application 
 
-This repository is to demonstrate the Web Client Application regarding the coursework for Web API Development 19.1 batch
+This repository is to demonstrate the Web Client Application regarding the coursework for Web API Development 19.1
 
 ## Team Members
 * V P H Shalitha
