@@ -12,7 +12,8 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/smartphones" component={Smartphones} />
+        <Route exact path="/smartphones" component={Smartphones} />
+        <Route exact path="/smartphones/:name" component={Smartphones} />
       </Switch>
     </Router>
   </React.StrictMode>,
