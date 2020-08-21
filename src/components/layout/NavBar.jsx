@@ -43,7 +43,7 @@ const NavBar = ({ itemCount, ...props }) => {
           Support
         </Link>
         <Link className="py-2 d-none d-md-inline-block" to="/cart">
-          Cart ({itemCount})
+          My Cart ({itemCount})
         </Link>
         <Link className="py-2 d-none d-md-inline-block" to="/login">
           Login
