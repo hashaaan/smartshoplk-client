@@ -3,9 +3,10 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
+import * as serviceWorker from "./serviceWorker";
 import Home from "./components/homepage/Home";
 import Smartphones from "./components/Smartphones";
-import * as serviceWorker from "./serviceWorker";
+import Cart from "./components/Cart";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,6 +15,7 @@ ReactDOM.render(
         <Route exact path="/" component={Home} />
         <Route exact path="/smartphones" component={Smartphones} />
         <Route exact path="/smartphones/:name" component={Smartphones} />
+        <Route exact path="/cart" component={Cart} />
       </Switch>
     </Router>
   </React.StrictMode>,
