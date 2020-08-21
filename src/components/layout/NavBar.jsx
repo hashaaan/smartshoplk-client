@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ itemCount, ...props }) => {
   return (
     <nav className="site-header sticky-top py-1">
       <div className="container d-flex flex-column flex-md-row justify-content-between">
@@ -43,7 +43,7 @@ const NavBar = () => {
           Support
         </Link>
         <Link className="py-2 d-none d-md-inline-block" to="/cart">
-          Cart
+          My Cart ({itemCount})
         </Link>
         <Link className="py-2 d-none d-md-inline-block" to="/login">
           Login
