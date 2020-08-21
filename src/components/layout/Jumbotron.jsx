@@ -1,18 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Jumbotron = () => {
+const Jumbotron = ({ heading, subheading, ...props }) => {
   return (
-    <section class="jumbotron text-center">
-      <div class="container">
-        <h1 class="jumbotron-heading">Welcome to Smartshop.lk!</h1>
-        <p class="lead text-muted">Buy your desired smartphone!</p>
+    <section className="jumbotron text-center">
+      <div className="container">
+        <h1 className="jumbotron-heading">
+          {heading ? heading : "Welcome to Smartshop.lk!"}
+        </h1>
+        <p className="lead text-muted">
+          {subheading ? subheading : "Buy your desired smartphone!"}
+        </p>
         <p>
-          <a href="#" class="btn btn-primary my-2 mx-2">
+          <Link to="/smartphones" className="btn btn-primary my-2 mx-1">
             View Collection
-          </a>
-          <a href="#" class="btn btn-secondary my-2">
+          </Link>
+          <Link to="/accessories" className="btn btn-secondary my-2">
             View Accessories
-          </a>
+          </Link>
         </p>
       </div>
     </section>
