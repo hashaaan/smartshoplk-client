@@ -42,11 +42,11 @@ const NavBar = () => {
         <Link className="py-2 d-none d-md-inline-block" to="/support">
           Support
         </Link>
-        <Link className="py-2 d-none d-md-inline-block" to="/pricing">
-          Pricing
-        </Link>
         <Link className="py-2 d-none d-md-inline-block" to="/cart">
           Cart
+        </Link>
+        <Link className="py-2 d-none d-md-inline-block" to="/login">
+          Login
         </Link>
       </div>
     </nav>
