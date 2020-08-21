@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import NavBar from "./layout/NavBar";
 
 const Smartphones = () => {
@@ -10,12 +11,12 @@ const Smartphones = () => {
           <h1 class="jumbotron-heading">Welcome to Smartshop.lk!</h1>
           <p class="lead text-muted">Buy your desired smartphone!</p>
           <p>
-            <a href="#" class="btn btn-primary my-2 mx-2">
+            <Link to="/smartphones" class="btn btn-primary my-2 mx-2">
               View Collection
-            </a>
-            <a href="#" class="btn btn-secondary my-2">
+            </Link>
+            <Link to="/accessories" class="btn btn-secondary my-2">
               View Accessories
-            </a>
+            </Link>
           </p>
         </div>
       </section>
