@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <nav class="site-header sticky-top py-1">
-      <div class="container d-flex flex-column flex-md-row justify-content-between">
-        <Link class="py-2" to="/">
+    <nav className="site-header sticky-top py-1">
+      <div className="container d-flex flex-column flex-md-row justify-content-between">
+        <Link className="py-2" to="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -13,10 +13,10 @@ const NavBar = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="d-block mx-auto"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="d-block mx-auto"
           >
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
@@ -27,27 +27,27 @@ const NavBar = () => {
             <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
           </svg>
         </Link>
-        <Link class="py-2 d-none d-md-inline-block" to="/">
+        <Link className="py-2 d-none d-md-inline-block" to="/">
           Home
         </Link>
-        <Link class="py-2 d-none d-md-inline-block" to="/smartphones">
+        <Link className="py-2 d-none d-md-inline-block" to="/smartphones">
           Smartphones
         </Link>
-        <Link class="py-2 d-none d-md-inline-block" to="/accessories">
+        <Link className="py-2 d-none d-md-inline-block" to="/accessories">
           Accessories
         </Link>
-        <a class="py-2 d-none d-md-inline-block" href="#">
+        <Link className="py-2 d-none d-md-inline-block" to="/about">
           About
-        </a>
-        <a class="py-2 d-none d-md-inline-block" href="#">
+        </Link>
+        <Link className="py-2 d-none d-md-inline-block" to="/support">
           Support
-        </a>
-        <a class="py-2 d-none d-md-inline-block" href="#">
+        </Link>
+        <Link className="py-2 d-none d-md-inline-block" to="/pricing">
           Pricing
-        </a>
-        <a class="py-2 d-none d-md-inline-block" href="#">
+        </Link>
+        <Link className="py-2 d-none d-md-inline-block" to="/cart">
           Cart
-        </a>
+        </Link>
       </div>
     </nav>
   );
