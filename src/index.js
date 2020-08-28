@@ -1,24 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import Home from "./components/homepage/Home";
-import Smartphones from "./components/Smartphones";
-import Cart from "./components/Cart";
+import configureStore from "./store";
+import App from "./App";
+
+const { persistor, store } = configureStore();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/smartphones" component={Smartphones} />
-        <Route exact path="/smartphones/:name" component={Smartphones} />
-        <Route exact path="/cart" component={Cart} />
-      </Switch>
-    </Router>
-  </React.StrictMode>,
+  <App store={store} persistor={persistor} />,
   document.getElementById("root")
 );
 
