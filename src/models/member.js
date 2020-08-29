@@ -1,6 +1,6 @@
 //import { errorMessages } from "../constants/messages";
 //import { Firebase, FirebaseRef } from "../lib/firebase";
-//import axios from "axios";
+import axios from "axios";
 //import history from "../history";
 
 export default {
@@ -149,83 +149,22 @@ export default {
     },
 
     /**
-     * Login to Firebase with Email/Password
+     * Login with Google
      *
-     * @param {obj} formData - data from form
+     * @param {obj} data - data from google login
      * @return {Promise}
      */
-    login(formData) {
-      //const { email, password } = formData;
-      //   return new Promise(async (resolve, reject) => {
-      //     // Validation rules
-      //     if (!email || email.length === 0)
-      //       return reject({ message: errorMessages.missingEmail });
-      //     if (!password || password.length === 0) {
-      //       return reject({ message: errorMessages.missingPassword });
-      //     }
-      //     const data = {
-      //       grant_type: "password",
-      //       client_id: process.env.REACT_APP_CLIENT_ID,
-      //       client_secret: process.env.REACT_APP_CLIENT_SECRET,
-      //       username: email,
-      //       password: password,
-      //     };
-      //     return Axios.post(`${process.env.REACT_APP_API_AUTH_URL}/token`, data)
-      //       .then((res) => {
-      //         // store access token in local storage
-      //         if (res.data.access_token) {
-      //           localStorage.setItem(
-      //             "access_token",
-      //             `${res.data.token_type} ${res.data.access_token}`
-      //           );
-      //         }
-      //         this.getMemberData()
-      //           .then(() => {
-      //             return resolve();
-      //           })
-      //           .catch((err) => {
-      //             return reject();
-      //           });
-      //       })
-      //       .catch((err) => {
-      //         console.log(err.respose);
-      //         this.setAuthenticated(false);
-      //         return reject();
-      //       });
-      // Go to Firebase
-      // return Firebase.auth()
-      //   .setPersistence(Firebase.auth.Auth.Persistence.LOCAL)
-      //   .then(() =>
-      //     Firebase.auth()
-      //       .signInWithEmailAndPassword(email, password)
-      //       .then(async res => {
-      //         const userDetails = res && res.user ? res.user : null;
-      //         // Save the user's login data (email, UID)
-      //         this.setUserLogin(userDetails);
-      //         // Update last logged in data
-      //         if (userDetails.uid) {
-      //           FirebaseRef.child(`users/${userDetails.uid}`).update({
-      //             lastLoggedIn: Firebase.database.ServerValue.TIMESTAMP
-      //           });
-      //           // Send verification Email when email hasn't been verified
-      //           if (userDetails.emailVerified === false) {
-      //             Firebase.auth()
-      //               .currentUser.sendEmailVerification()
-      //               .catch(() =>
-      //                 console.log("Verification email failed to send")
-      //               );
-      //           }
-      //           // Get/Save User Profile (name, signed up date etc)
-      //           this.listenForMemberProfileUpdates(dispatch);
-      //         }
-      //         return resolve();
-      //       })
-      //       .catch(reject)
-      //   );
-      //});
-      // .catch(err => {
-      //   throw err.message;
-      // });
+    login(data) {
+      return new Promise(async (resolve, reject) => {
+        if (data.accessToken) {
+          localStorage.setItem("access_token", data.accessToken);
+          this.setUserDetails(data);
+          this.setAuthenticated(true);
+          return resolve({ success: true });
+        } else {
+          return reject({ success: false });
+        }
+      });
     },
 
     /**
@@ -318,22 +257,12 @@ export default {
      * @returns {Promise}
      */
     logout() {
-      //   return new Promise((resolve, reject) => {
-      //     localStorage.removeItem("access_token");
-      //     this.resetUser();
-      //     this.setAuthenticated(false);
-      //     resolve();
-      //     //   Firebase.auth()
-      //     //     .signOut()
-      //     //     .then(() => {
-      //     //       this.resetUser();
-      //     //       resolve();
-      //     //     })
-      //     //     .catch(reject)
-      //     // ).catch(err => {
-      //     //   throw err.message;
-      //     // });
-      //  });
+      return new Promise((resolve, reject) => {
+        localStorage.removeItem("access_token");
+        this.resetUser();
+        this.setAuthenticated(false);
+        resolve({ success: true });
+      });
     },
   }),
 };
