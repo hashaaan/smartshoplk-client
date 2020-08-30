@@ -2,6 +2,7 @@ import Home from "../views/Home";
 import Smartphones from "../views/Smartphones";
 import ProductView from "../views/ProductView";
 import Cart from "../views/Cart";
+import Login from "../views/Login";
 
 let indexRoutes = [
   { path: "/", name: "Home", component: Home, exact: true },
@@ -21,6 +22,12 @@ let indexRoutes = [
     path: "/cart",
     name: "Shopping Cart",
     component: Cart,
+    exact: true,
+  },
+  {
+    path: "/login",
+    name: "Shopping Cart",
+    component: Login,
     exact: true,
   },
 ];
