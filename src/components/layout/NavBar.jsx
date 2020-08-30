@@ -1,11 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { GoogleLogout } from "react-google-login";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+const CLIENT_ID = "710824792703-lh7q8iob2k9n192kokfdh5k2lnqlephn";
 
 const NavBar = ({ itemCount, ...props }) => {
+  const { authenticated } = props;
+
+  const logout = (response) => {
+    const { memberLogout } = props;
+
+    memberLogout()
+      .then((res) => {
+        console.log("res", res);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+
+  const handleLogoutFailure = (response) => {
+    alert("Failed to log out");
+  };
+
   return (
     <nav className="site-header sticky-top py-1">
       <div className="container d-flex flex-column flex-md-row justify-content-between">
-        <Link className="py-2" to="/">
+        <Link className="py-2 link" to="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -27,30 +50,55 @@ const NavBar = ({ itemCount, ...props }) => {
             <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
           </svg>
         </Link>
-        <Link className="py-2 d-none d-md-inline-block" to="/">
+        <Link className="py-2 d-none d-md-inline-block link" to="/">
           Home
         </Link>
-        <Link className="py-2 d-none d-md-inline-block" to="/smartphones">
+        <Link className="py-2 d-none d-md-inline-block link" to="/smartphones">
           Smartphones
         </Link>
-        <Link className="py-2 d-none d-md-inline-block" to="/accessories">
+        <Link className="py-2 d-none d-md-inline-block link" to="/accessories">
           Accessories
         </Link>
-        <Link className="py-2 d-none d-md-inline-block" to="/about">
+        <Link className="py-2 d-none d-md-inline-block link" to="/about">
           About
         </Link>
-        <Link className="py-2 d-none d-md-inline-block" to="/support">
+        <Link className="py-2 d-none d-md-inline-block link" to="/support">
           Support
         </Link>
-        <Link className="py-2 d-none d-md-inline-block" to="/cart">
+        <Link className="py-2 d-none d-md-inline-block link" to="/cart">
           My Cart ({itemCount})
         </Link>
-        <Link className="py-2 d-none d-md-inline-block" to="/login">
-          Login
-        </Link>
+        {authenticated ? (
+          <GoogleLogout
+            clientId={CLIENT_ID}
+            onLogoutSuccess={logout}
+            onFailure={handleLogoutFailure}
+            render={(renderProps) => (
+              <div
+                className="py-2 d-none d-md-inline-block link"
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+              >
+                Logout
+              </div>
+            )}
+          />
+        ) : (
+          <Link className="py-2 d-none d-md-inline-block link" to="/login">
+            Login
+          </Link>
+        )}
       </div>
     </nav>
   );
 };
 
-export default NavBar;
+const mapStateToProps = (state) => ({
+  authenticated: state.member.authenticated,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  memberLogout: dispatch.member.logout,
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBar));
