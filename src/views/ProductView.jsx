@@ -1,4 +1,16 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileExcel } from "@fortawesome/free-regular-svg-icons";
+import {
+  faShoppingCart,
+  faPlus,
+  faMinus,
+  faTruck,
+  faCreditCard,
+  faPhone,
+  faStar,
+  faCalendar,
+} from "@fortawesome/free-solid-svg-icons";
 import NavBar from "../components/layout/NavBar";
 import "./ProductView.css";
 import Footer from "../components/layout/Footer";
@@ -72,7 +84,7 @@ const ProductView = () => {
                           data-type="minus"
                           data-field=""
                         >
-                          <i className="fa fa-minus"></i>
+                          <FontAwesomeIcon icon={faMinus} />
                         </button>
                       </div>
                       <input
@@ -93,7 +105,7 @@ const ProductView = () => {
                           data-type="plus"
                           data-field=""
                         >
-                          <i className="fa fa-plus"></i>
+                          <FontAwesomeIcon icon={faPlus} />
                         </button>
                       </div>
                     </div>
@@ -102,35 +114,36 @@ const ProductView = () => {
                     href="cart.html"
                     className="btn btn-success btn-lg btn-block text-uppercase"
                   >
-                    <i className="fa fa-shopping-cart"></i> Add To Cart
+                    <FontAwesomeIcon icon={faShoppingCart} /> Add To Cart
                   </a>
                 </form>
                 <div className="product_rassurance">
                   <ul className="list-inline">
                     <li className="list-inline-item">
                       <i className="fa fa-truck fa-2x"></i>
+                      <FontAwesomeIcon icon={faTruck} size="2x" />
                       <br />
                       Fast delivery
                     </li>
                     <li className="list-inline-item">
-                      <i className="fa fa-credit-card fa-2x"></i>
+                      <FontAwesomeIcon icon={faCreditCard} size="2x" />
                       <br />
                       Secure payment
                     </li>
                     <li className="list-inline-item">
-                      <i className="fa fa-phone fa-2x"></i>
+                      <FontAwesomeIcon icon={faPhone} size="2x" />
                       <br />
-                      +33 1 22 54 65 60
+                      +94 7 67 58 28 23
                     </li>
                   </ul>
                 </div>
                 <div className="reviews_product p-3 mb-2 ">
                   3 reviews
-                  <i className="fa fa-star"></i>
-                  <i className="fa fa-star"></i>
-                  <i className="fa fa-star"></i>
-                  <i className="fa fa-star"></i>
-                  <i className="fa fa-star"></i>
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} />
                   (4/5)
                   <a className="pull-right" href="#reviews">
                     View all reviews
@@ -138,7 +151,7 @@ const ProductView = () => {
                 </div>
                 <div className="datasheet p-3 mb-2 bg-info text-white">
                   <div className="text-white">
-                    <i className="fa fa-file-text"></i> Download DataSheet
+                    <FontAwesomeIcon icon={faFileExcel} /> Download DataSheet
                   </div>
                 </div>
               </div>
@@ -195,15 +208,12 @@ const ProductView = () => {
               </div>
               <div className="card-body">
                 <div className="review">
-                  <span
-                    className="glyphicon glyphicon-calendar"
-                    aria-hidden="true"
-                  ></span>{" "}
-                  January 01, 2018 <span className="fa fa-star"></span>
-                  <span className="fa fa-star"></span>
-                  <span className="fa fa-star"></span>
-                  <span className="fa fa-star"></span>
-                  <span className="fa fa-star"></span> by Paul Smith
+                  <FontAwesomeIcon icon={faCalendar} /> January 01, 2018{" "}
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} /> by Paul Smith
                   <div className="blockquote">
                     <p className="mb-0">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -213,17 +223,12 @@ const ProductView = () => {
                   <hr />
                 </div>
                 <div className="review">
-                  <span
-                    className="glyphicon glyphicon-calendar"
-                    aria-hidden="true"
-                  ></span>{" "}
-                  January 01, 2018{" "}
-                  <span className="fa fa-star" aria-hidden="true"></span>
-                  <span className="fa fa-star" aria-hidden="true"></span>
-                  <span className="fa fa-star" aria-hidden="true"></span>
-                  <span className="fa fa-star" aria-hidden="true"></span>
-                  <span className="fa fa-star" aria-hidden="true"></span> by
-                  Paul Smith
+                  <FontAwesomeIcon icon={faCalendar} /> January 01, 2018{" "}
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} />
+                  <FontAwesomeIcon icon={faStar} /> by Paul Smith
                   <div className="blockquote">
                     <p className="mb-0">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
