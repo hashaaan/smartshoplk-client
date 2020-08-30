@@ -1,10 +1,20 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+import indexRoutes from "./routes";
+import NotFound from "./views/NotFound";
 
 function App() {
   return (
-    <div className="container">
-      <h1 className="heading-1">Welcome to Smartshop.lk!</h1>
+    <div>
+      <Router>
+        <Switch>
+          {indexRoutes.map((prop, key) => {
+            return <Route {...prop} key={key} />;
+          })}
+          <Route component={NotFound} />
+        </Switch>
+      </Router>
     </div>
   );
 }
