@@ -29,16 +29,16 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { loginUser } = this.props;
+    // const { loginUser } = this.props;
 
     let errObj = this.validateForm();
     if (!Object.keys(errObj).length > 0) {
-      const formData = {
-        email: this.state.email,
-        password: this.state.password,
-      };
+      // const formData = {
+      //   email: this.state.email,
+      //   password: this.state.password,
+      // };
       this.setState({ loading: true });
-      //loginUser(formData, this.redirect);
+      // loginUser(formData, this.redirect);
     } else {
       console.log(errObj);
     }
