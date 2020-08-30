@@ -13,20 +13,6 @@ class Login extends Component {
     loading: false,
   };
 
-  componentDidMount() {
-    const { authenticated } = this.props;
-    if (authenticated) {
-      this.redirect();
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { authenticated } = nextProps;
-    if (authenticated) {
-      this.redirect();
-    }
-  }
-
   validateForm = () => {
     let errObj = {};
 
@@ -39,11 +25,6 @@ class Login extends Component {
 
     this.setState({ errors: errObj });
     return errObj;
-  };
-
-  redirect = () => {
-    const { history } = this.props;
-    history.push("/");
   };
 
   handleSubmit = (e) => {
