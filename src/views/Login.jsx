@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 //import { loginUser } from "../actions/userActions";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import NavBar from "../components/layout/NavBar";
+import GoogleBtn from "../components/layout/GoogleBtn";
 
 class Login extends Component {
   state = {
@@ -117,6 +120,7 @@ class Login extends Component {
                 {isFetching ? "Loading..." : "LOGIN"}
               </button>
               <br />
+              <GoogleBtn />
               <p className="mt-5 mb-3 text-muted">© 2020</p>
             </form>
           </div>
@@ -126,4 +130,10 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  authenticated: state.member.authenticated,
+});
+
+const mapDispatchToProps = (dispatch) => ({});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
