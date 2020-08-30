@@ -15,10 +15,25 @@ class Cart extends Component {
           heading="Shopping Cart"
           subheading={"Checkout your picked items"}
         /> */}
+        <br />
         <div className="cart_section">
           <div className="container-fluid">
             <div className="row">
               <div className="col-lg-10 offset-lg-1">
+                <nav aria-label="breadcrumb">
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item">
+                      <a href="/">Home</a>
+                    </li>
+                    {/* <li className="breadcrumb-item">
+                  <a href="category.html">Category</a>
+                </li> */}
+                    <li className="breadcrumb-item active" aria-current="page">
+                      Cart
+                    </li>
+                  </ol>
+                </nav>
+
                 <div className="cart_container">
                   <div className="cart_title">
                     Shopping Cart<small> (3 items in your cart) </small>
