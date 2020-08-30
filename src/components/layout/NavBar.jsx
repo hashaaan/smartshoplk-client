@@ -1,7 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { GoogleLogout } from "react-google-login";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+const CLIENT_ID = "710824792703-lh7q8iob2k9n192kokfdh5k2lnqlephn";
 
 const NavBar = ({ itemCount, ...props }) => {
+  const { authenticated } = props;
+
+  const logout = (response) => {
+    const { memberLogout } = props;
+
+    memberLogout()
+      .then((res) => {
+        console.log("res", res);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+
+  const handleLogoutFailure = (response) => {
+    alert("Failed to log out");
+  };
+
   return (
     <nav className="site-header sticky-top py-1">
       <div className="container d-flex flex-column flex-md-row justify-content-between">
@@ -45,12 +68,37 @@ const NavBar = ({ itemCount, ...props }) => {
         <Link className="py-2 d-none d-md-inline-block link" to="/cart">
           My Cart ({itemCount})
         </Link>
-        <Link className="py-2 d-none d-md-inline-block link" to="/login">
-          Login
-        </Link>
+        {authenticated ? (
+          <GoogleLogout
+            clientId={CLIENT_ID}
+            onLogoutSuccess={logout}
+            onFailure={handleLogoutFailure}
+            render={(renderProps) => (
+              <div
+                className="py-2 d-none d-md-inline-block link"
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+              >
+                Logout
+              </div>
+            )}
+          />
+        ) : (
+          <Link className="py-2 d-none d-md-inline-block link" to="/login">
+            Login
+          </Link>
+        )}
       </div>
     </nav>
   );
 };
 
-export default NavBar;
+const mapStateToProps = (state) => ({
+  authenticated: state.member.authenticated,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  memberLogout: dispatch.member.logout,
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBar));
