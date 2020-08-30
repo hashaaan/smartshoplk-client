@@ -1,17 +1,19 @@
 import Home from "../views/Home";
 import Smartphones from "../views/Smartphones";
-import Cart from "../views/Cart";
+import ProductView from "../views/ProductView";
 
 let indexRoutes = [
   {
     path: "/smartphones",
     name: "Smartphones",
     component: Smartphones,
+    exact: true,
   },
   {
-    path: "/cart",
-    name: "Shopping Cart",
-    component: Cart,
+    path: "/product",
+    name: "Product View",
+    component: ProductView,
+    exact: true,
   },
   { path: "/", name: "Home", component: Home, exact: true },
 ];

@@ -36,7 +36,7 @@ class Smartphones extends Component {
             subheading="Pickup your dream choices from here!"
             showbuttons
           />
-          <div className="album py-5 bg-light">
+          <div className="album py-5">
             <div className="container">
               <div className="row">
                 {smartphones.map((smartphone, index) => (
@@ -61,7 +61,7 @@ class Smartphones extends Component {
                             <Link
                               type="button"
                               className="btn btn-sm btn-outline-secondary"
-                              to="/smartphones/iPhone7"
+                              to="/product"
                             >
                               View
                             </Link>
