@@ -18,18 +18,6 @@ let indexRoutes = [
     component: ProductView,
     exact: true,
   },
-  {
-    path: "/cart",
-    name: "Shopping Cart",
-    component: Cart,
-    exact: true,
-  },
-  {
-    path: "/login",
-    name: "Shopping Cart",
-    component: Login,
-    exact: true,
-  },
 ];
 
 export default indexRoutes;
