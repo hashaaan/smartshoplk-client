@@ -36,6 +36,7 @@ const ProductView = () => {
                   className="img-fluid"
                   style={{ width: "100%", height: "100%" }}
                   src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560924153/alcatel-smartphones-einsteiger-mittelklasse-neu-3m.jpg"
+                  alt="..."
                 />
                 {/* <p className="text-center">Zoom</p> */}
               </div>
@@ -136,9 +137,9 @@ const ProductView = () => {
                   </a>
                 </div>
                 <div className="datasheet p-3 mb-2 bg-info text-white">
-                  <a href="" className="text-white">
+                  <div className="text-white">
                     <i className="fa fa-file-text"></i> Download DataSheet
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>
