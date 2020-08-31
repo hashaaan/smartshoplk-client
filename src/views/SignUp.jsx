@@ -5,9 +5,10 @@ import { Fade } from "react-awesome-reveal";
 import NavBar from "../components/layout/NavBar";
 import GoogleBtn from "../components/layout/GoogleBtn";
 
-class Login extends Component {
+class SignUp extends Component {
   state = {
     email: "",
+    username: "",
     password: "",
     errors: {},
     loading: false,
@@ -15,16 +16,25 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { loginUser } = this.props;
+    const { signupUser } = this.props;
 
     const formData = {
       email: this.state.email,
+      username: this.state.username,
       password: this.state.password,
     };
     this.setState({ loading: true });
-    loginUser(formData)
-      .then((res) => {})
-      .catch((err) => {});
+    signupUser(formData)
+      .then((res) => {
+        if (res.success) {
+          this.setState({ loading: false });
+        }
+      })
+      .catch((err) => {
+        if (err) {
+          this.setState({ loading: false });
+        }
+      });
   };
 
   render() {
@@ -61,7 +71,9 @@ class Login extends Component {
                   <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
                 </svg>
 
-                <h1 className="h3 mb-3 font-weight-normal">Login with Email</h1>
+                <h1 className="h3 mb-3 font-weight-normal">
+                  Sign Up with Email
+                </h1>
                 <div
                   style={{
                     color: "red",
@@ -69,7 +81,7 @@ class Login extends Component {
                     marginBottom: "10px",
                   }}
                 >
-                  {error}
+                  {error && error}
                 </div>
                 <label htmlFor="inputEmail" className="sr-only">
                   Email address
@@ -83,6 +95,17 @@ class Login extends Component {
                   onChange={(e) => this.setState({ email: e.target.value })}
                 />
                 <br />
+                <label htmlFor="inputEmail" className="sr-only">
+                  Username
+                </label>
+                <input
+                  type="username"
+                  id="inputUsername"
+                  className="form-control"
+                  placeholder="Username"
+                  onChange={(e) => this.setState({ username: e.target.value })}
+                />
+                <br />
                 <label htmlFor="inputPassword" className="sr-only">
                   Password
                 </label>
@@ -94,19 +117,14 @@ class Login extends Component {
                   onChange={(e) => this.setState({ password: e.target.value })}
                 />
                 <br />
-                <div className="checkbox mb-3">
-                  <label>
-                    <input type="checkbox" value="remember-me" /> Remember me
-                  </label>
-                </div>
                 <button className="btn btn-primary btn-block" type="submit">
-                  {isFetching ? "Loading..." : "LOGIN"}
+                  {isFetching ? "Loading..." : "SIGN UP"}
                 </button>
                 <br />
                 <GoogleBtn />
                 <br />
                 <div className="mt-2">
-                  Don't have an account? <Link to="/signup">Sign Up</Link>
+                  Already have an account? <Link to="/login">Login</Link>
                 </div>
                 <p className="mt-5 mb-3 text-muted">smartshop.lk © 2020</p>
               </form>
@@ -120,10 +138,11 @@ class Login extends Component {
 
 const mapStateToProps = (state) => ({
   authenticated: state.member.authenticated,
+  error: state.member.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loginUser: dispatch.member.login,
+  signupUser: dispatch.member.signupWithEmail,
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUp));

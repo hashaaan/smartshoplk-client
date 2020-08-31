@@ -7,10 +7,10 @@ const CLIENT_ID = "710824792703-lh7q8iob2k9n192kokfdh5k2lnqlephn";
 
 class GoogleBtn extends Component {
   login = (response) => {
-    const { memberLogin } = this.props;
+    const { googleLogin } = this.props;
 
     if (response.accessToken) {
-      memberLogin(response)
+      googleLogin(response)
         .then((res) => {
           console.log("res", res);
         })
@@ -46,7 +46,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  memberLogin: dispatch.member.login,
+  googleLogin: dispatch.member.loginWithGoogle,
 });
 
 export default withRouter(

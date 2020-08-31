@@ -1,5 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import {
+  faHeart,
+  faHome,
+  faEnvelope,
+  faPhone,
+  faPrint,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Footer = () => {
   return (
@@ -60,16 +69,19 @@ const Footer = () => {
             <hr className="bg-white mb-2 mt-0 d-inline-block mx-auto w-25" />
             <ul className="list-unstyled">
               <li>
-                <i className="fa fa-home mr-2"></i> smartshop.lk
+                <FontAwesomeIcon icon={faHome} className="mr-2" /> smartshop.lk
               </li>
               <li>
-                <i className="fa fa-envelope mr-2"></i> email@smartshop.lk
+                <FontAwesomeIcon icon={faEnvelope} className="mr-2" />{" "}
+                email@smartshop.lk
               </li>
               <li>
-                <i className="fa fa-phone mr-2"></i> + 33 12 14 15 16
+                <FontAwesomeIcon icon={faPhone} className="mr-2" /> + 33 12 14
+                15 16
               </li>
               <li>
-                <i className="fa fa-print mr-2"></i> + 33 12 14 15 16
+                <FontAwesomeIcon icon={faPrint} className="mr-2" /> + 33 12 14
+                15 16
               </li>
             </ul>
           </div>
@@ -78,7 +90,7 @@ const Footer = () => {
               <a href="#">Back to top</a>
             </p>
             <p className="text-right text-muted">
-              created with <i className="fa fa-heart"></i> by{" "}
+              created with <FontAwesomeIcon icon={faHeart} /> by{" "}
               <Link to="/">
                 <i>smartshop.lk</i>
               </Link>
