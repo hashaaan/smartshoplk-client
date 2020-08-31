@@ -139,7 +139,7 @@ class Orders extends Component {
                               </div>
                             </td>
                             <td className="text-right">
-                              <button className="btn btn-sm btn-outline-info">
+                              <button className="btn btn-sm btn-outline-success">
                                 Confirm Received
                               </button>
                             </td>

@@ -79,7 +79,7 @@ const AppRouter = ({ authenticated, ...props }) => {
         <Route exact path="/login" component={ProtectedRoutes.Login} />
         <Route exact path="/signup" component={ProtectedRoutes.SignUp} />
         <Route exact path="/cart" component={ProtectedRoutes.Cart} />
-        <Route exact path="/orders" component={ProtectedRoutes.Cart} />
+        <Route exact path="/orders" component={ProtectedRoutes.Orders} />
         <Route component={NotFound} />
       </Switch>
     </Router>

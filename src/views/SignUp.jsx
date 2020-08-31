@@ -26,7 +26,7 @@ class SignUp extends Component {
     signupUser(formData)
       .then((res) => {
         if (res.success) {
-          this.setState({ loading: false });
+          //this.setState({ loading: false });
         }
       })
       .catch((err) => {
