@@ -1,6 +1,14 @@
 import axios from "axios";
+import { notification } from "antd";
 
 const API_URL = "http://localhost:8000/api/";
+
+const openNotification = (type) => {
+  notification[type]({
+    message: "Successful!",
+    description: "Logout Successful!",
+  });
+};
 
 export default {
   state: {}, // initial state
@@ -61,7 +69,7 @@ export default {
         axios
           .post(`${API_URL}users`, formData)
           .then((res) => {
-            console.log(res);
+            //console.log(res);
             if (res.data.token) {
               localStorage.setItem("access_token", res.data.token);
               this.setError(null);
@@ -73,6 +81,7 @@ export default {
           })
           .catch((err) => {
             this.setError(err.response.data.message);
+            this.setAuthenticated(false);
             reject(err.response);
           });
       });
@@ -104,40 +113,29 @@ export default {
      * @returns {Promise}
      */
     getMemberData() {
-      //   return new Promise(async (resolve, reject) => {
-      //     if (localStorage.access_token) {
-      //       return Axios.get(`${process.env.REACT_APP_API_URL}/user`, {
-      //         headers: {
-      //           Authorization: localStorage.access_token,
-      //         },
-      //       })
-      //         .then((res) => {
-      //           // set user data redux store
-      //           if (res.data) {
-      //             this.setAuthenticated(true);
-      //             this.setUserDetails(res.data);
-      //             history.push("/");
-      //           }
-      //           resolve(res.data);
-      //         })
-      //         .catch((err) => {
-      //           console.log("err", err);
-      //           this.setAuthenticated(false);
-      //           reject();
-      //         });
-      //     }
-      //   });
-      // if (Firebase === null) return new Promise(resolve => resolve);
-      // // Ensure token is up to date
-      // return new Promise(resolve => {
-      //   Firebase.auth().onAuthStateChanged(loggedIn => {
-      //     if (loggedIn) {
-      //       this.listenForMemberProfileUpdates(dispatch);
-      //       return resolve();
-      //     }
-      //     return new Promise(() => resolve);
-      //   });
-      // });
+      return new Promise(async (resolve, reject) => {
+        if (localStorage.access_token) {
+          return axios
+            .get(`${API_URL}users`, {
+              headers: {
+                Authorization: localStorage.access_token,
+              },
+            })
+            .then((res) => {
+              // console.log("res", res);
+              // set user data redux store
+              if (res.data) {
+                this.setUserDetails(res.data.user);
+                resolve({ success: true });
+              }
+              resolve({ success: false });
+            })
+            .catch((err) => {
+              console.log("err", err);
+              reject(err);
+            });
+        }
+      });
     },
 
     /**
@@ -148,15 +146,28 @@ export default {
      */
     loginWithEmail(formData) {
       return new Promise(async (resolve, reject) => {
-        if (formData) {
-          //axios
-          localStorage.setItem("access_token", formData.accessToken);
-          this.setUserDetails(formData);
-          this.setAuthenticated(true);
-          return resolve({ success: true });
-        } else {
-          return reject({ success: false });
-        }
+        //console.log(formData);
+        axios
+          .post(`${API_URL}users/signin`, formData)
+          .then((res) => {
+            //console.log("res", res);
+            if (res.data.token) {
+              localStorage.setItem("access_token", res.data.token);
+              this.setError(null);
+              this.getMemberData();
+              this.setAuthenticated(true);
+              return resolve({ success: true });
+            }
+            resolve({ success: false });
+          })
+          .catch((err) => {
+            if (err.response) {
+              this.setError(err.response.data.message);
+              this.setAuthenticated(false);
+              reject(err.response);
+            }
+          });
+        return resolve({ success: true });
       });
     },
 

@@ -1,15 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { GoogleLogout } from "react-google-login";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-
-const CLIENT_ID = "710824792703-lh7q8iob2k9n192kokfdh5k2lnqlephn";
 
 const NavBar = ({ itemCount, ...props }) => {
   const { authenticated } = props;
 
-  const logout = (response) => {
+  const logout = () => {
     const { memberLogout } = props;
 
     memberLogout()
@@ -62,27 +59,20 @@ const NavBar = ({ itemCount, ...props }) => {
         <Link className="py-2 d-none d-md-inline-block link" to="/about">
           About
         </Link>
-        <Link className="py-2 d-none d-md-inline-block link" to="/support">
-          Support
+        <Link className="py-2 d-none d-md-inline-block link" to="/orders">
+          My Orders
         </Link>
         <Link className="py-2 d-none d-md-inline-block link" to="/cart">
           My Cart ({itemCount})
         </Link>
         {authenticated ? (
-          <GoogleLogout
-            clientId={CLIENT_ID}
-            onLogoutSuccess={logout}
-            onFailure={handleLogoutFailure}
-            render={(renderProps) => (
-              <div
-                className="py-2 d-none d-md-inline-block link"
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-              >
-                Logout
-              </div>
-            )}
-          />
+          <div
+            className="py-2 d-none d-md-inline-block link"
+            onClick={() => logout()}
+            //disabled={renderProps.disabled}
+          >
+            Logout
+          </div>
         ) : (
           <Link className="py-2 d-none d-md-inline-block link" to="/login">
             Login
