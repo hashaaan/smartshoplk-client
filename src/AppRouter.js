@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import Cart from "./views/Cart";
 import NotFound from "./views/NotFound";
 import Login from "./views/Login";
+import SignUp from "./views/SignUp";
 import indexRoutes from "./routes";
 
 const AppRouter = ({ authenticated, ...props }) => {
@@ -63,6 +64,7 @@ const AppRouter = ({ authenticated, ...props }) => {
 
   const ProtectedRoutes = {
     Login: withAuth({ authCriteria: loginCriteria })(Login),
+    SignUp: withAuth({ authCriteria: loginCriteria })(SignUp),
     Cart: authRoute(Cart),
   };
 
@@ -73,6 +75,7 @@ const AppRouter = ({ authenticated, ...props }) => {
           return <Route {...prop} key={key} />;
         })}
         <Route exact path="/login" component={ProtectedRoutes.Login} />
+        <Route exact path="/signup" component={ProtectedRoutes.SignUp} />
         <Route exact path="/cart" component={ProtectedRoutes.Cart} />
         <Route component={NotFound} />
       </Switch>
