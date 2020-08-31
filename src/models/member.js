@@ -1,7 +1,6 @@
-//import { errorMessages } from "../constants/messages";
-//import { Firebase, FirebaseRef } from "../lib/firebase";
-//import axios from "axios";
-//import history from "../history";
+import axios from "axios";
+
+const API_URL = "http://localhost:8000/api/";
 
 export default {
   state: {}, // initial state
@@ -35,6 +34,13 @@ export default {
       };
     },
 
+    setError(state, payload) {
+      return {
+        ...state,
+        error: payload,
+      };
+    },
+
     resetUser() {
       return {};
     },
@@ -45,45 +51,31 @@ export default {
    */
   effects: (dispatch) => ({
     /**
-     * Sign Up
+     * Sign Up with Email
      *
      * @param {obj} formData - data from form
      * @return {Promise}
      */
-    signUp(formData) {
-      //const { email, password, firstName, lastName } = formData;
-      //   return new Promise(async (resolve, reject) => {
-      //     // Validation rules
-      //     if (!firstName)
-      //       return reject({ message: errorMessages.missingFirstName });
-      //     if (!lastName)
-      //       return reject({ message: errorMessages.missingLastName });
-      //     if (!email) return reject({ message: errorMessages.missingEmail });
-      //     if (!password)
-      //       return reject({ message: errorMessages.missingPassword });
-      //     // Go to Firebase
-      //     return Firebase.auth()
-      //       .createUserWithEmailAndPassword(email, password)
-      //       .then((res) => {
-      //         // Send user details to Firebase database
-      //         if (res && res.user.uid) {
-      //           FirebaseRef.child(`users/${res.user.uid}`)
-      //             .set({
-      //               firstName,
-      //               lastName,
-      //               signedUp: Firebase.database.ServerValue.TIMESTAMP,
-      //               lastLoggedIn: Firebase.database.ServerValue.TIMESTAMP,
-      //             })
-      //             .then(() => {
-      //               this.login(formData);
-      //               resolve(res);
-      //             });
-      //         }
-      //       })
-      //       .catch(reject);
-      //   }).catch((err) => {
-      //     throw err.message;
-      //   });
+    signupWithEmail(formData) {
+      return new Promise(async (resolve, reject) => {
+        axios
+          .post(`${API_URL}users`, formData)
+          .then((res) => {
+            console.log(res);
+            if (res.data.token) {
+              localStorage.setItem("access_token", res.data.token);
+              this.setError(null);
+              this.setUserDetails(res.data.user);
+              this.setAuthenticated(true);
+              return resolve({ success: true });
+            }
+            resolve({ success: false });
+          })
+          .catch((err) => {
+            this.setError(err.response.data.message);
+            reject(err.response);
+          });
+      });
     },
 
     /**
@@ -149,12 +141,32 @@ export default {
     },
 
     /**
+     * Login with Email
+     *
+     * @param {obj} formData - data from login form
+     * @return {Promise}
+     */
+    loginWithEmail(formData) {
+      return new Promise(async (resolve, reject) => {
+        if (formData) {
+          //axios
+          localStorage.setItem("access_token", formData.accessToken);
+          this.setUserDetails(formData);
+          this.setAuthenticated(true);
+          return resolve({ success: true });
+        } else {
+          return reject({ success: false });
+        }
+      });
+    },
+
+    /**
      * Login with Google
      *
      * @param {obj} data - data from google login
      * @return {Promise}
      */
-    login(data) {
+    loginWithGoogle(data) {
       return new Promise(async (resolve, reject) => {
         if (data.accessToken) {
           localStorage.setItem("access_token", data.accessToken);
