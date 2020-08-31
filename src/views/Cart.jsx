@@ -139,7 +139,10 @@ class Cart extends Component {
                               </div>
                             </td>
                             <td className="text-right">
-                              <button className="btn btn-outline-danger">
+                              <button
+                                className="btn btn-outline-danger"
+                                title="Remove"
+                              >
                                 <FontAwesomeIcon icon={faTrashAlt} />
                               </button>
                             </td>
