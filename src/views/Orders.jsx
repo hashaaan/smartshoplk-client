@@ -56,7 +56,7 @@ const calcPrice = (unitPrice, quantity) => {
   return price.toFixed(2);
 };
 
-class Cart extends Component {
+class Orders extends Component {
   render() {
     const { history } = this.props;
 
@@ -73,14 +73,14 @@ class Cart extends Component {
                       <a href="/">Home</a>
                     </li>
                     <li className="breadcrumb-item active" aria-current="page">
-                      Cart
+                      Orders
                     </li>
                   </ol>
                 </nav>
 
                 <div className="cart_container">
                   <div className="cart_title">
-                    Shopping Cart<small> (3 items) </small>
+                    Orders<small> (3 items) </small>
                   </div>
                   <Fade>
                     <table className="table table-hover shopping-cart-wrap">
@@ -91,10 +91,10 @@ class Cart extends Component {
                             Quantity
                           </th>
                           <th scope="col" width="160">
-                            Price
+                            Order Amount
                           </th>
                           <th scope="col" width="180" className="text-right">
-                            Action
+                            Order Action
                           </th>
                         </tr>
                       </thead>
@@ -139,8 +139,8 @@ class Cart extends Component {
                               </div>
                             </td>
                             <td className="text-right">
-                              <button className="btn btn-outline-danger">
-                                <FontAwesomeIcon icon={faTrashAlt} />
+                              <button className="btn btn-sm btn-outline-info">
+                                Confirm Received
                               </button>
                             </td>
                           </tr>
@@ -148,27 +148,14 @@ class Cart extends Component {
                       </tbody>
                     </table>
                   </Fade>
-                  <Fade>
-                    <div className="order_total">
-                      <div className="order_total_content text-md-right">
-                        <div className="order_total_title">Cart Total:</div>
-                        <div className="order_total_amount">
-                          {"LKR"} {calcCartTotal(cartItems)}
-                        </div>
-                      </div>
-                    </div>
-                  </Fade>
                   <div className="cart_buttons">
                     <button
                       type="button"
-                      className="btn btn-success mr-2"
+                      className="btn btn-success"
                       onClick={() => history.push("/smartphones")}
                     >
                       <FontAwesomeIcon icon={faShoppingCart} /> Continue
                       Shopping
-                    </button>
-                    <button type="button" className="btn btn-info">
-                      Checkout
                     </button>
                   </div>
                 </div>
@@ -182,4 +169,4 @@ class Cart extends Component {
   }
 }
 
-export default withRouter(Cart);
+export default withRouter(Orders);
