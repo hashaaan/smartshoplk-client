@@ -10,6 +10,10 @@ const openNotification = (type) => {
   });
 };
 
+const firstLetterUC = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 export default {
   state: {}, // initial state
 
@@ -65,6 +69,7 @@ export default {
      * @return {Promise}
      */
     signupWithEmail(formData) {
+      this.setError(null);
       return new Promise(async (resolve, reject) => {
         axios
           .post(`${API_URL}users`, formData)
@@ -72,7 +77,6 @@ export default {
             //console.log(res);
             if (res.data.token) {
               localStorage.setItem("access_token", res.data.token);
-              this.setError(null);
               this.setUserDetails(res.data.user);
               this.setAuthenticated(true);
               return resolve({ success: true });
@@ -80,9 +84,19 @@ export default {
             resolve({ success: false });
           })
           .catch((err) => {
-            this.setError(err.response.data.message);
-            this.setAuthenticated(false);
-            reject(err.response);
+            if (err.response) {
+              console.log("Error", err.response);
+              if (err.response.status === 500) {
+                notification["error"]({
+                  message: "Signup Failed..!",
+                  description: firstLetterUC(err.response.data.message),
+                });
+              } else {
+                this.setError(firstLetterUC(err.response.data.message));
+              }
+              this.setAuthenticated(false);
+            }
+            reject(err);
           });
       });
     },
@@ -131,7 +145,15 @@ export default {
               resolve({ success: false });
             })
             .catch((err) => {
-              console.log("err", err);
+              if (err.response) {
+                console.log("Error", err.response);
+                if (err.response.status === 500) {
+                  notification["error"]({
+                    message: "Signup Failed..!",
+                    description: firstLetterUC(err.response.data.message),
+                  });
+                }
+              }
               reject(err);
             });
         }
@@ -146,6 +168,7 @@ export default {
      */
     loginWithEmail(formData) {
       return new Promise(async (resolve, reject) => {
+        this.setError(null);
         //console.log(formData);
         axios
           .post(`${API_URL}users/signin`, formData)
@@ -153,7 +176,6 @@ export default {
             //console.log("res", res);
             if (res.data.token) {
               localStorage.setItem("access_token", res.data.token);
-              this.setError(null);
               this.getMemberData();
               this.setAuthenticated(true);
               return resolve({ success: true });
@@ -162,12 +184,19 @@ export default {
           })
           .catch((err) => {
             if (err.response) {
-              this.setError(err.response.data.message);
+              console.log("Error", err.response);
+              if (err.response.status === 500) {
+                notification["error"]({
+                  message: "Signup Failed..!",
+                  description: firstLetterUC(err.response.data.message),
+                });
+              } else {
+                this.setError(firstLetterUC(err.response.data.message));
+              }
               this.setAuthenticated(false);
-              reject(err.response);
             }
+            reject(err);
           });
-        return resolve({ success: true });
       });
     },
 

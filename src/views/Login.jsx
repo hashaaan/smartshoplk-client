@@ -24,7 +24,7 @@ class Login extends Component {
     loginUser(formData)
       .then((res) => {
         if (res.success) {
-          this.setState({ loading: false });
+          //this.setState({ loading: false });
         }
       })
       .catch((err) => {
