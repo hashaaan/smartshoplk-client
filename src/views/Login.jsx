@@ -9,7 +9,6 @@ class Login extends Component {
   state = {
     email: "",
     password: "",
-    errors: {},
     loading: false,
   };
 
@@ -23,12 +22,21 @@ class Login extends Component {
     };
     this.setState({ loading: true });
     loginUser(formData)
-      .then((res) => {})
-      .catch((err) => {});
+      .then((res) => {
+        if (res.success) {
+          this.setState({ loading: false });
+        }
+      })
+      .catch((err) => {
+        if (err) {
+          this.setState({ loading: false });
+        }
+      });
   };
 
   render() {
-    const { isFetching, error } = this.props;
+    const { error } = this.props;
+    const { loading } = this.state;
     return (
       <>
         <NavBar />
@@ -69,7 +77,7 @@ class Login extends Component {
                     marginBottom: "10px",
                   }}
                 >
-                  {error}
+                  {error && error}
                 </div>
                 <label htmlFor="inputEmail" className="sr-only">
                   Email address
@@ -100,7 +108,7 @@ class Login extends Component {
                   </label>
                 </div>
                 <button className="btn btn-primary btn-block" type="submit">
-                  {isFetching ? "Loading..." : "LOGIN"}
+                  {loading ? "Loading..." : "LOGIN"}
                 </button>
                 <br />
                 <GoogleBtn />
@@ -120,10 +128,11 @@ class Login extends Component {
 
 const mapStateToProps = (state) => ({
   authenticated: state.member.authenticated,
+  error: state.member.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loginUser: dispatch.member.login,
+  loginUser: dispatch.member.loginWithEmail,
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

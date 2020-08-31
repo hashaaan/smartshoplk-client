@@ -10,7 +10,6 @@ class SignUp extends Component {
     email: "",
     username: "",
     password: "",
-    errors: {},
     loading: false,
   };
 
@@ -38,7 +37,8 @@ class SignUp extends Component {
   };
 
   render() {
-    const { isFetching, error } = this.props;
+    const { error } = this.props;
+    const { loading } = this.props;
     return (
       <>
         <NavBar />
@@ -118,7 +118,7 @@ class SignUp extends Component {
                 />
                 <br />
                 <button className="btn btn-primary btn-block" type="submit">
-                  {isFetching ? "Loading..." : "SIGN UP"}
+                  {loading ? "Loading..." : "SIGN UP"}
                 </button>
                 <br />
                 <GoogleBtn />
