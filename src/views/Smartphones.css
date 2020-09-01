@@ -11,6 +11,32 @@
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 }
 
+.album .card h5.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+.album .card .card-text {
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+.album .card .price {
+  font-size: 20px;
+  font-weight: 600;
+  padding-top: 10px;
+  position: absolute;
+  right: 20px;
+  bottom: 60px;
+}
+
 @media (min-width: 1200px) {
   .container {
     max-width: 1140px;
