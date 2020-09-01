@@ -57,3 +57,9 @@ footer {
 footer a {
   color: #f8f9fa !important;
 }
+
+.btn .disabled,
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
