@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -57,8 +58,26 @@ const calcPrice = (unitPrice, quantity) => {
 };
 
 class Cart extends Component {
+  state = {
+    loading: false,
+  };
+
+  componentDidMount() {
+    const { getCartItems } = this.props;
+
+    getCartItems()
+      .then((res) => {
+        //console.log("res", res);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
+
   render() {
-    const { history } = this.props;
+    const { history, items } = this.props;
+
+    console.log(items);
 
     return (
       <>
@@ -80,7 +99,8 @@ class Cart extends Component {
 
                 <div className="cart_container">
                   <div className="cart_title">
-                    Shopping Cart<small> (3 items) </small>
+                    Shopping Cart
+                    <small> ({items ? items.length : 0} items) </small>
                   </div>
                   <Fade>
                     <table className="table table-hover shopping-cart-wrap">
@@ -99,68 +119,86 @@ class Cart extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {cartItems.map((item, index) => (
-                          <tr key={index}>
-                            <td>
-                              <figure className="media">
-                                <div className="img-wrap">
-                                  <img
-                                    src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560924153/alcatel-smartphones-einsteiger-mittelklasse-neu-3m.jpg"
-                                    className="img-thumbnail img-sm"
-                                    alt="..."
-                                  />
+                        {items.length > 0 ? (
+                          items.map((item, index) => (
+                            <tr key={index}>
+                              <td>
+                                <figure className="media">
+                                  <div className="img-wrap">
+                                    <img
+                                      src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560924153/alcatel-smartphones-einsteiger-mittelklasse-neu-3m.jpg"
+                                      className="img-thumbnail img-sm"
+                                      alt="Product Image"
+                                    />
+                                  </div>
+                                  <figcaption className="media-body">
+                                    <h6 className="title text-truncate">
+                                      {item.smartphone.name.toUpperCase()}
+                                    </h6>
+                                    <dl className="param param-inline small">
+                                      <dt>Model No: </dt>
+                                      <dd>{item.smartphone.modelNo}</dd>
+                                    </dl>
+                                    <dl className="param param-inline small">
+                                      <dt>Color: </dt>
+                                      <dd>
+                                        {item.smartphone.color.toUpperCase()}
+                                      </dd>
+                                    </dl>
+                                  </figcaption>
+                                </figure>
+                              </td>
+                              <td>1</td>
+                              <td>
+                                <div className="price-wrap">
+                                  <var className="price">
+                                    {item.smartphone.currency}{" "}
+                                    {item.smartphone.price}
+                                    {/*calcPrice(item.unitPrice, item.quantity)*/}
+                                  </var>
+                                  <small className="text-muted">
+                                    ({item.smartphone.currency}{" "}
+                                    {item.smartphone.price}
+                                    {/*item.unitPrice.toFixed(2)*/} each)
+                                  </small>
                                 </div>
-                                <figcaption className="media-body">
-                                  <h6 className="title text-truncate">
-                                    {item.name}
-                                  </h6>
-                                  <dl className="param param-inline small">
-                                    <dt>Model No: </dt>
-                                    <dd>{item.modelNo}</dd>
-                                  </dl>
-                                  <dl className="param param-inline small">
-                                    <dt>Color: </dt>
-                                    <dd>{item.color}</dd>
-                                  </dl>
-                                </figcaption>
-                              </figure>
-                            </td>
-                            <td>{item.quantity}</td>
-                            <td>
-                              <div className="price-wrap">
-                                <var className="price">
-                                  {item.currency}{" "}
-                                  {calcPrice(item.unitPrice, item.quantity)}
-                                </var>
-                                <small className="text-muted">
-                                  ({item.currency} {item.unitPrice.toFixed(2)}{" "}
-                                  each)
-                                </small>
-                              </div>
-                            </td>
-                            <td className="text-right">
-                              <button
-                                className="btn btn-outline-danger"
-                                title="Remove"
+                              </td>
+                              <td className="text-right">
+                                <button
+                                  className="btn btn-outline-danger"
+                                  title="Remove"
+                                >
+                                  <FontAwesomeIcon icon={faTrashAlt} />
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan="4">
+                              <h4
+                                style={{ textAlign: "center", padding: "40px" }}
                               >
-                                <FontAwesomeIcon icon={faTrashAlt} />
-                              </button>
+                                No Cart Items Available..!
+                              </h4>
                             </td>
                           </tr>
-                        ))}
+                        )}
                       </tbody>
                     </table>
                   </Fade>
-                  <Fade>
-                    <div className="order_total">
-                      <div className="order_total_content text-md-right">
-                        <div className="order_total_title">Cart Total:</div>
-                        <div className="order_total_amount">
-                          {"LKR"} {calcCartTotal(cartItems)}
+                  {items.length > 0 && (
+                    <Fade>
+                      <div className="order_total">
+                        <div className="order_total_content text-md-right">
+                          <div className="order_total_title">Cart Total:</div>
+                          <div className="order_total_amount">
+                            {"LKR"} {calcCartTotal(cartItems)}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Fade>
+                    </Fade>
+                  )}
                   <div className="cart_buttons">
                     <button
                       type="button"
@@ -170,7 +208,11 @@ class Cart extends Component {
                       <FontAwesomeIcon icon={faShoppingCart} /> Continue
                       Shopping
                     </button>
-                    <button type="button" className="btn btn-info">
+                    <button
+                      type="button"
+                      className="btn btn-info"
+                      disabled={items.length > 0 ? false : true}
+                    >
                       Checkout
                     </button>
                   </div>
@@ -185,4 +227,13 @@ class Cart extends Component {
   }
 }
 
-export default withRouter(Cart);
+const mapStateToProps = (state) => ({
+  items: state.cart.items,
+  //error: state.member.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCartItems: dispatch.cart.getCartItems,
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart));
