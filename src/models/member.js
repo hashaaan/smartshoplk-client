@@ -1,17 +1,8 @@
 import axios from "axios";
 import { notification } from "antd";
 
-const API_URL = "http://localhost:8000/api/";
-
-const openNotification = (type) => {
-  notification[type]({
-    message: "Successful!",
-    description: "Logout Successful!",
-  });
-};
-
 const firstLetterUC = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+  if (string) return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 export default {
@@ -72,7 +63,7 @@ export default {
       this.setError(null);
       return new Promise(async (resolve, reject) => {
         axios
-          .post(`${API_URL}users`, formData)
+          .post(`${process.env.REACT_APP_API_URL}users`, formData)
           .then((res) => {
             //console.log(res);
             if (res.data.token) {
@@ -130,7 +121,7 @@ export default {
       return new Promise(async (resolve, reject) => {
         if (localStorage.access_token) {
           return axios
-            .get(`${API_URL}users`, {
+            .get(`${process.env.REACT_APP_API_URL}users`, {
               headers: {
                 Authorization: localStorage.access_token,
               },
@@ -171,7 +162,7 @@ export default {
         this.setError(null);
         //console.log(formData);
         axios
-          .post(`${API_URL}users/signin`, formData)
+          .post(`${process.env.REACT_APP_API_URL}users/signin`, formData)
           .then((res) => {
             //console.log("res", res);
             if (res.data.token) {

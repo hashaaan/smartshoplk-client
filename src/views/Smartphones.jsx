@@ -35,7 +35,7 @@ class Smartphones extends Component {
 
   render() {
     const { smartphones } = this.props;
-    console.log("sm", smartphones);
+
     return (
       <>
         <NavBar itemCount={this.state.items.length} />
@@ -58,7 +58,7 @@ class Smartphones extends Component {
                         <img
                           className="card-img-top"
                           data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
-                          alt="Thumbnail [100%x225]"
+                          alt="Product Image"
                           style={style.imgStyle}
                           src={smartphone.imgUrl && smartphone.imgUrl}
                           data-holder-rendered="true"
@@ -73,7 +73,7 @@ class Smartphones extends Component {
                           <p className="card-text">
                             {smartphone.description && smartphone.description}
                           </p>
-                          <span class="badge badge-pill badge-success">
+                          <span className="badge badge-pill badge-success">
                             {smartphone.color && smartphone.color}
                           </span>
                           <ReactStars

@@ -1,17 +1,8 @@
 import axios from "axios";
-import { notification } from "antd";
-
-const API_URL = "http://localhost:8000/api/";
-
-const openNotification = (type) => {
-  notification[type]({
-    message: "Successful!",
-    description: "Logout Successful!",
-  });
-};
+// import { notification } from "antd";
 
 const firstLetterUC = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+  if (string) return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 export default {
@@ -54,24 +45,22 @@ export default {
      */
     getSmartphones() {
       return new Promise(async (resolve, reject) => {
-        if (localStorage.access_token) {
-          return axios
-            .get(`${API_URL}smartphones`)
-            .then((res) => {
-              //console.log("res", res);
-              if (res.data) {
-                this.setSmartphones(res.data);
-                resolve({ success: true });
-              }
-              resolve({ success: false });
-            })
-            .catch((err) => {
-              if (err.response) {
-                console.log("Error", err.response);
-              }
-              reject(err);
-            });
-        }
+        return axios
+          .get(`${process.env.REACT_APP_API_URL}smartphones`)
+          .then((res) => {
+            //console.log("res", res);
+            if (res.data) {
+              this.setSmartphones(res.data);
+              resolve({ success: true });
+            }
+            resolve({ success: false });
+          })
+          .catch((err) => {
+            if (err.response) {
+              console.log("Error", err.response);
+            }
+            reject(err);
+          });
       });
     },
   }),
