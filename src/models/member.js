@@ -120,7 +120,7 @@ export default {
     getMemberData() {
       return new Promise(async (resolve, reject) => {
         if (localStorage.access_token) {
-          return axios
+          axios
             .get(`${process.env.REACT_APP_API_URL}users`, {
               headers: {
                 Authorization: localStorage.access_token,
