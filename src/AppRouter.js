@@ -13,6 +13,7 @@ import Login from "./views/Login";
 import SignUp from "./views/SignUp";
 import Orders from "./views/Orders";
 import indexRoutes from "./routes";
+import ProductView from "./views/ProductView";
 
 const AppRouter = ({ authenticated, ...props }) => {
   // Test every passed-in auth verification function.
@@ -77,9 +78,11 @@ const AppRouter = ({ authenticated, ...props }) => {
           return <Route {...prop} key={key} />;
         })}
         <Route exact path="/login" component={ProtectedRoutes.Login} />
+        <Route exact path="/login" component={ProtectedRoutes.Login} />
         <Route exact path="/signup" component={ProtectedRoutes.SignUp} />
         <Route exact path="/cart" component={ProtectedRoutes.Cart} />
         <Route exact path="/orders" component={ProtectedRoutes.Orders} />
+        <Route exact path="/product/:id" component={ProductView} />
         <Route component={NotFound} />
       </Switch>
     </Router>
