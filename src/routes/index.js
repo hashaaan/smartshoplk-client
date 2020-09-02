@@ -10,12 +10,6 @@ let indexRoutes = [
     component: Smartphones,
     exact: true,
   },
-  {
-    path: "/product",
-    name: "Smartphones",
-    component: ProductView,
-    exact: true,
-  },
 ];
 
 export default indexRoutes;

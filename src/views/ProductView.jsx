@@ -16,6 +16,7 @@ import "./ProductView.css";
 import Footer from "../components/layout/Footer";
 import { Link, useLocation, withRouter } from "react-router-dom";
 import axios from "axios";
+import ReactStars from "react-rating-stars-component";
 
 function getReviewStars(amount) {
   for (let i = 1; i <= amount; i++) {
@@ -31,11 +32,11 @@ class ProductView extends React.Component {
     };
   }
   componentDidMount() {
-    this.fetchProduct("5f4cddfd6eda853a0cf39066");
+    this.fetchProduct(this.props.match.params.id);
   }
   fetchProduct = (id) => {
     axios
-      .get(`http://localhost:8000/api/smartphones/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}smartphones/${id}`)
       .then((response) => {
         if (response.data && response.data.response) {
           this.setState({
@@ -195,11 +196,20 @@ class ProductView extends React.Component {
                       : `${
                           this.state.product && this.state.product.rating
                         } reviews`}
-                    {this.state.product && this.state.product.rating !== 0
-                      ? getReviewStars(
-                          this.state.product && this.state.product.rating
-                        )
-                      : null}
+                    {this.state.product ? (
+                      <ReactStars
+                        count={5}
+                        value={
+                          this.state.product.rating
+                            ? this.state.product.rating
+                            : 0
+                        }
+                        edit={false}
+                        //onChange={() => {}}
+                        size={24}
+                        activeColor="#ffd700"
+                      />
+                    ) : null}
                     (
                     {this.state.product && this.state.product.rating === 0
                       ? 0

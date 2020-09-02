@@ -96,7 +96,9 @@ class Smartphones extends Component {
                               <Link
                                 type="button"
                                 className="btn btn-sm btn-outline-secondary"
-                                to="/product"
+                                to={{
+                                  pathname: `/product/${smartphone._id}`,
+                                }}
                               >
                                 View
                               </Link>
