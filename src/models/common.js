@@ -39,13 +39,13 @@ export default {
    */
   effects: (dispatch) => ({
     /**
-     * Get the current Member's Details
+     * Get the smartphones list
      *
      * @returns {Promise}
      */
     getSmartphones() {
       return new Promise(async (resolve, reject) => {
-        return axios
+        axios
           .get(`${process.env.REACT_APP_API_URL}smartphones`)
           .then((res) => {
             //console.log("res", res);
