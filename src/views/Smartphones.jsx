@@ -6,6 +6,7 @@ import ReactStars from "react-rating-stars-component";
 import NavBar from "../components/layout/NavBar";
 import Jumbotron from "../components/layout/Jumbotron";
 import Footer from "../components/layout/Footer";
+import TimeAgo from "../components/layout/TimeAgo";
 import "./Smartphones.css";
 
 const style = {
@@ -110,17 +111,21 @@ class Smartphones extends Component {
                                 Add to Cart
                               </button>
                             </div>
-                            <small
-                              className="text-muted"
-                              style={{
-                                position: "absolute",
-                                bottom: "20px",
-                                right: "20px",
-                                padding: "10px",
-                              }}
-                            >
-                              9 mins ago
-                            </small>
+                            {smartphone.createdAt && (
+                              <TimeAgo
+                                timestamp={smartphone.createdAt}
+                                className="text-muted"
+                                style={{
+                                  position: "absolute",
+                                  bottom: "20px",
+                                  right: "20px",
+                                  padding: "10px",
+                                  color: "#6c757d",
+                                  fontSize: "80%",
+                                  fontWeight: "400",
+                                }}
+                              />
+                            )}
                           </div>
                         </div>
                       </div>
