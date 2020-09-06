@@ -164,8 +164,8 @@ var {
 
 .order_total_title {
   display: inline-block;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.9);
   line-height: 60px;
 }
 

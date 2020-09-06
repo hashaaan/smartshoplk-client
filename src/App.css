@@ -20,6 +20,10 @@ button:focus {
   outline: none;
 }
 
+svg {
+  vertical-align: unset;
+}
+
 .form-signin {
   width: 100%;
   max-width: 330px;
