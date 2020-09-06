@@ -199,14 +199,22 @@ export default {
      */
     loginWithGoogle(data) {
       return new Promise(async (resolve, reject) => {
-        if (data.accessToken) {
-          localStorage.setItem("access_token", data.accessToken);
-          this.setUserDetails(data);
-          this.setAuthenticated(true);
-          return resolve({ success: true });
-        } else {
-          return reject({ success: false });
-        }
+        return axios
+          .post(`${process.env.REACT_APP_API_URL}users/google/signin`, data)
+          .then((res) => {
+            console.log(res);
+            if (res.data.token) {
+              localStorage.setItem("access_token", res.data.token);
+              this.getMemberData();
+              this.setAuthenticated(true);
+              return resolve({ success: true });
+            }
+            resolve({ success: false });
+          })
+          .catch((err) => {
+            console.log(err);
+            reject(err);
+          });
       });
     },
 
