@@ -9,45 +9,10 @@ import NavBar from "../components/layout/NavBar";
 import Footer from "../components/layout/Footer";
 import "./Cart.css";
 
-let cartItems = [
-  {
-    name: "iPhone 11 Pro Max",
-    modelNo: "XFERRSA",
-    color: "Gold",
-    quantity: 3,
-    unitPrice: 12000,
-    currency: "LKR",
-  },
-  {
-    name: "iPhone 7 Plus",
-    modelNo: "XFERRSA",
-    color: "Red",
-    quantity: 5,
-    unitPrice: 120000,
-    currency: "LKR",
-  },
-  {
-    name: "OnePlus 8 Pro",
-    modelNo: "XFERRSA",
-    color: "Black",
-    quantity: 2,
-    unitPrice: 145000,
-    currency: "LKR",
-  },
-  {
-    name: "OnePlus 8 Pro",
-    modelNo: "XFERRSA",
-    color: "Black",
-    quantity: 8,
-    unitPrice: 15000,
-    currency: "LKR",
-  },
-];
-
 const calcCartTotal = (items) => {
   let cartTotal = 0;
   items.map((item) => {
-    cartTotal = cartTotal + item.unitPrice * item.quantity;
+    cartTotal = cartTotal + item.smartphone.price * item.qty;
   });
   return cartTotal.toFixed(2);
 };
@@ -110,11 +75,11 @@ class Cart extends Component {
                           <th scope="col" width="120">
                             Quantity
                           </th>
-                          <th scope="col" width="160">
-                            Price
+                          <th scope="col" width="180">
+                            Total Price
                           </th>
                           <th scope="col" width="180" className="text-right">
-                            Action
+                            Cart Actions
                           </th>
                         </tr>
                       </thead>
@@ -126,40 +91,59 @@ class Cart extends Component {
                                 <figure className="media">
                                   <div className="img-wrap">
                                     <img
-                                      src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560924153/alcatel-smartphones-einsteiger-mittelklasse-neu-3m.jpg"
+                                      src={
+                                        item.smartphone.imgUrl &&
+                                        item.smartphone.imgUrl
+                                      }
                                       className="img-thumbnail img-sm"
                                       alt="Product Image"
                                     />
                                   </div>
                                   <figcaption className="media-body">
                                     <h6 className="title text-truncate">
-                                      {item.smartphone.name.toUpperCase()}
+                                      {item.smartphone.name
+                                        ? item.smartphone.name.toUpperCase()
+                                        : "Unspecified"}
                                     </h6>
                                     <dl className="param param-inline small">
                                       <dt>Model No: </dt>
-                                      <dd>{item.smartphone.modelNo}</dd>
+                                      <dd>
+                                        {item.smartphone.modelNo
+                                          ? item.smartphone.modelNo
+                                          : "Unspecified"}
+                                      </dd>
                                     </dl>
                                     <dl className="param param-inline small">
                                       <dt>Color: </dt>
                                       <dd>
-                                        {item.smartphone.color.toUpperCase()}
+                                        {item.smartphone.color
+                                          ? item.smartphone.color.toUpperCase()
+                                          : "Unspecified"}
                                       </dd>
                                     </dl>
                                   </figcaption>
                                 </figure>
                               </td>
-                              <td>1</td>
+                              <td>{item.qty ? item.qty : "Unspecified"}</td>
                               <td>
                                 <div className="price-wrap">
                                   <var className="price">
-                                    {item.smartphone.currency}{" "}
-                                    {item.smartphone.price}
-                                    {/*calcPrice(item.unitPrice, item.quantity)*/}
+                                    {item.smartphone.currency
+                                      ? item.smartphone.currency
+                                      : "LKR"}
+                                    {". "}
+                                    {calcPrice(item.smartphone.price, item.qty)}
                                   </var>
                                   <small className="text-muted">
-                                    ({item.smartphone.currency}{" "}
-                                    {item.smartphone.price}
-                                    {/*item.unitPrice.toFixed(2)*/} each)
+                                    (
+                                    {item.smartphone.currency
+                                      ? item.smartphone.currency
+                                      : "LKR"}
+                                    {". "}
+                                    {item.smartphone.price
+                                      ? item.smartphone.price.toFixed(2)
+                                      : 0}{" "}
+                                    each)
                                   </small>
                                 </div>
                               </td>
@@ -193,7 +177,7 @@ class Cart extends Component {
                         <div className="order_total_content text-md-right">
                           <div className="order_total_title">Cart Total:</div>
                           <div className="order_total_amount">
-                            {"LKR"} {calcCartTotal(cartItems)}
+                            {"LKR."} {calcCartTotal(items)}
                           </div>
                         </div>
                       </div>
