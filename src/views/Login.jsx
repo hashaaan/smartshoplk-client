@@ -14,7 +14,7 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { loginUser } = this.props;
+    const { loginUser, getCartItems } = this.props;
 
     const formData = {
       email: this.state.email,
@@ -24,7 +24,7 @@ class Login extends Component {
     loginUser(formData)
       .then((res) => {
         if (res.success) {
-          //this.setState({ loading: false });
+          getCartItems();
         }
       })
       .catch((err) => {
@@ -133,6 +133,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loginUser: dispatch.member.loginWithEmail,
+  getCartItems: dispatch.cart.getCartItems,
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
