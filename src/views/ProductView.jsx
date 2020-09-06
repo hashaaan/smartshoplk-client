@@ -8,21 +8,25 @@ import {
   faTruck,
   faCreditCard,
   faPhone,
-  faStar,
-  faCalendar,
+  // faStar,
+  // faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
 import NavBar from "../components/layout/NavBar";
 import "./ProductView.css";
 import Footer from "../components/layout/Footer";
-import { Link, useLocation, withRouter } from "react-router-dom";
+import {
+  // Link,
+  // useLocation,
+  withRouter,
+} from "react-router-dom";
 import axios from "axios";
 import ReactStars from "react-rating-stars-component";
 
-function getReviewStars(amount) {
-  for (let i = 1; i <= amount; i++) {
-    return <FontAwesomeIcon icon={faStar} />;
-  }
-}
+// function getReviewStars(amount) {
+//   for (let i = 1; i <= amount; i++) {
+//     return <FontAwesomeIcon icon={faStar} />;
+//   }
+// }
 
 class ProductView extends React.Component {
   constructor(props) {

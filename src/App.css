@@ -16,6 +16,10 @@ h5 {
   margin-top: 20px;
 }
 
+button:focus {
+  outline: none;
+}
+
 .form-signin {
   width: 100%;
   max-width: 330px;

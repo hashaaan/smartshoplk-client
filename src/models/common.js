@@ -1,9 +1,9 @@
 import axios from "axios";
 // import { notification } from "antd";
 
-const firstLetterUC = (string) => {
-  if (string) return string.charAt(0).toUpperCase() + string.slice(1);
-};
+// const firstLetterUC = (string) => {
+//   if (string) return string.charAt(0).toUpperCase() + string.slice(1);
+// };
 
 export default {
   // initial state
