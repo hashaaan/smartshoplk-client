@@ -12,6 +12,7 @@ import NotFound from "./views/NotFound";
 import Login from "./views/Login";
 import SignUp from "./views/SignUp";
 import Orders from "./views/Orders";
+import Checkout from "./views/Checkout";
 import indexRoutes from "./routes";
 
 const AppRouter = ({ authenticated, ...props }) => {
@@ -68,6 +69,7 @@ const AppRouter = ({ authenticated, ...props }) => {
     SignUp: withAuth({ authCriteria: loginCriteria })(SignUp),
     Cart: authRoute(Cart),
     Orders: authRoute(Orders),
+    Checkout: authRoute(Checkout),
   };
 
   return (
@@ -81,6 +83,7 @@ const AppRouter = ({ authenticated, ...props }) => {
         <Route exact path="/signup" component={ProtectedRoutes.SignUp} />
         <Route exact path="/cart" component={ProtectedRoutes.Cart} />
         <Route exact path="/orders" component={ProtectedRoutes.Orders} />
+        <Route exact path="/checkout" component={ProtectedRoutes.Checkout} />
         <Route component={NotFound} />
       </Switch>
     </Router>

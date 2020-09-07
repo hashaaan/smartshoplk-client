@@ -1,0 +1,22 @@
+.item-price {
+  font-size: 12px;
+  width: 40%;
+  text-align: right;
+}
+
+.item-title {
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+  width: 220px;
+}
+
+.item-description {
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+  width: 220px;
+  font-size: 12px;
+}
