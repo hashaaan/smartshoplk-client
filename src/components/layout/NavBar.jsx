@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-const NavBar = ({ itemCount, ...props }) => {
-  const { authenticated } = props;
+const NavBar = (props) => {
+  const { authenticated, items } = props;
 
   const logout = () => {
-    const { memberLogout } = props;
-
+    const { memberLogout, clearCart } = props;
+    // clear cart data
+    clearCart();
+    // logout user
     memberLogout()
       .then((res) => {
         console.log("res", res);
@@ -59,7 +61,7 @@ const NavBar = ({ itemCount, ...props }) => {
           My Orders
         </Link>
         <Link className="py-2 d-none d-md-inline-block link" to="/cart">
-          My Cart ({itemCount})
+          My Cart ({items ? items.length : 0})
         </Link>
         {authenticated ? (
           <div
@@ -81,10 +83,12 @@ const NavBar = ({ itemCount, ...props }) => {
 
 const mapStateToProps = (state) => ({
   authenticated: state.member.authenticated,
+  items: state.cart.items,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   memberLogout: dispatch.member.logout,
+  clearCart: dispatch.cart.clearCart,
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBar));
