@@ -38,7 +38,7 @@ class Login extends Component {
     const { error } = this.props;
     const { loading } = this.state;
     return (
-      <>
+      <div className="bg-light">
         <NavBar />
         <div className="container">
           <div className="text-center" data-gr-c-s-loaded="true">
@@ -121,7 +121,7 @@ class Login extends Component {
             </Fade>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }

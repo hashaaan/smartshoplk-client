@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Fade } from "react-awesome-reveal";
 import { connect } from "react-redux";
 import ReactStars from "react-rating-stars-component";
+import { Modal, InputNumber } from "antd";
 import NavBar from "../components/layout/NavBar";
 import Jumbotron from "../components/layout/Jumbotron";
 import Footer from "../components/layout/Footer";
@@ -14,13 +15,17 @@ const style = {
     height: "340px",
     width: "100%",
     display: "block",
-    padding: "10px 30px",
+    padding: "10px",
   },
 };
 
 class Smartphones extends Component {
   state = {
     items: [],
+    addToCartModalVisible: false,
+    quantity: 1,
+    selectedItem: null,
+    addToCartLoading: false,
   };
 
   componentDidMount() {
@@ -28,17 +33,41 @@ class Smartphones extends Component {
     getSmartphones();
   }
 
-  addToCard = (item) => {
-    let itemsArr = this.state.items;
-    itemsArr.push(item);
-    this.setState({ items: itemsArr });
+  showAddToCart = (item) => {
+    this.setState({ addToCartModalVisible: true, selectedItem: item });
+  };
+
+  onCancelModal = () => {
+    this.setState({ addToCartModalVisible: false, quantity: 1 });
+  };
+
+  onChangeQuantity = (quantity) => {
+    this.setState({ quantity });
+  };
+
+  handleAddToCart = () => {
+    const { addToCart } = this.props;
+    const { quantity, selectedItem } = this.state;
+    this.setState({ addToCartLoading: true });
+    addToCart({ smartphoneId: selectedItem._id, qty: quantity })
+      .then((res) => {
+        this.setState({ addToCartLoading: false });
+        if (res.success) {
+          this.setState({ addToCartModalVisible: false });
+        }
+      })
+      .catch((err) => {
+        this.setState({ addToCartLoading: false });
+        console.log(err);
+      });
   };
 
   render() {
     const { smartphones } = this.props;
+    const { addToCartModalVisible, quantity, addToCartLoading } = this.state;
 
     return (
-      <>
+      <div className="bg-light">
         <NavBar itemCount={this.state.items.length} />
         <main role="main">
           <Jumbotron
@@ -59,7 +88,7 @@ class Smartphones extends Component {
                         <img
                           className="card-img-top"
                           data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
-                          alt="Product Image"
+                          alt="Product"
                           style={style.imgStyle}
                           src={smartphone.imgUrl && smartphone.imgUrl}
                           data-holder-rendered="true"
@@ -106,7 +135,7 @@ class Smartphones extends Component {
                               <button
                                 type="button"
                                 className="btn btn-sm btn-outline-secondary"
-                                onClick={this.addToCard}
+                                onClick={() => this.showAddToCart(smartphone)}
                               >
                                 Add to Cart
                               </button>
@@ -137,7 +166,28 @@ class Smartphones extends Component {
           </div>
           <Footer />
         </main>
-      </>
+        {/* Add to cart modal */}
+        <Modal
+          title="Add to Cart"
+          visible={addToCartModalVisible}
+          onOk={this.handleAddToCart}
+          onCancel={this.onCancelModal}
+          okText="Add to Cart"
+          width={350}
+          confirmLoading={addToCartLoading}
+        >
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <span style={{ padding: "5px 10px" }}>Select Quantity : </span>
+            <InputNumber
+              min={1}
+              max={1000}
+              defaultValue={1}
+              value={quantity}
+              onChange={this.onChangeQuantity}
+            />
+          </div>
+        </Modal>
+      </div>
     );
   }
 }
@@ -149,6 +199,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getSmartphones: dispatch.common.getSmartphones,
+  addToCart: dispatch.cart.addToCart,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Smartphones);
