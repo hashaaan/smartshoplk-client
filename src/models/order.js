@@ -18,6 +18,13 @@ export default {
       };
     },
 
+    setError(state, payload) {
+      return {
+        ...state,
+        error: payload,
+      };
+    },
+
     resetOrder() {
       return {};
     },
@@ -66,6 +73,50 @@ export default {
               reject(err);
             });
         }
+      });
+    },
+
+    /**
+     * POST orders
+     */
+    createOrder(data) {
+      console.log(data);
+      return new Promise(async (resolve, reject) => {
+        this.setError(null);
+        return axios
+          .post(`${process.env.REACT_APP_API_URL}order`, data, {
+            headers: {
+              Authorization: localStorage.access_token,
+            },
+          })
+          .then((res) => {
+            //console.log(res);
+            if (res.status === 201) {
+              if (res.data.message) {
+                notification["success"]({
+                  message: res.data.message,
+                });
+              }
+              this.getOrderItems();
+              resolve({ success: true });
+            }
+            resolve({ success: false });
+          })
+          .catch((err) => {
+            if (err.message === "Network Error") {
+              notification["error"]({
+                message: err.message,
+                description: "Try again later ...",
+              });
+            }
+            if (err.response) {
+              console.log(err.response);
+              if (err.response.status === 422) {
+                this.setError(err.response.data.message);
+              }
+            }
+            reject(err);
+          });
       });
     },
 
