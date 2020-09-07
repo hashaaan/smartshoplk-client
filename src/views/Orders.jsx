@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { Fade } from "react-awesome-reveal";
@@ -56,8 +57,16 @@ const calcPrice = (unitPrice, quantity) => {
 };
 
 class Orders extends Component {
+  async componentDidMount() {
+    const { getOrderItems } = this.props;
+    await getOrderItems()
+      .then((res) => {})
+      .catch((err) => {});
+  }
   render() {
-    const { history } = this.props;
+    const { history, items } = this.props;
+
+    console.log(items);
 
     return (
       <>
@@ -168,4 +177,13 @@ class Orders extends Component {
   }
 }
 
-export default withRouter(Orders);
+const mapStateToProps = (state) => ({
+  items: state.order.items,
+  //error: state.member.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getOrderItems: dispatch.order.getOrderItems,
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Orders));
