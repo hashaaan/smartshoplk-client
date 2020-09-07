@@ -8,7 +8,7 @@ import { Slide, Fade } from "react-awesome-reveal";
 
 function Home() {
   return (
-    <>
+    <div className="bg-gray">
       <NavBar />
       <Slide>
         <ProductBox />
@@ -17,7 +17,7 @@ function Home() {
         <Showcase />
       </Fade>
       <Footer />
-    </>
+    </div>
   );
 }
 

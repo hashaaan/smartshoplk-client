@@ -36,8 +36,13 @@ svg {
   padding-top: var(--jumbotron-padding-y);
   padding-bottom: var(--jumbotron-padding-y);
   margin-bottom: 0;
-  background-color: #f8f9fa;
+  background-color: #e0e0e0;
 }
+
+.bg-gray {
+  background: #e0e0e0;
+}
+
 @media (min-width: 768px) {
   .jumbotron {
     padding-top: calc(var(--jumbotron-padding-y) * 2);

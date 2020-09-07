@@ -69,7 +69,7 @@ class Orders extends Component {
     console.log(items);
 
     return (
-      <>
+      <div className="bg-light">
         <NavBar itemCount={0} />
         <div className="cart_section mt-5">
           <div className="container-fluid">
@@ -172,7 +172,7 @@ class Orders extends Component {
           </div>
         </div>
         <Footer />
-      </>
+      </div>
     );
   }
 }

@@ -67,7 +67,7 @@ class Smartphones extends Component {
     const { addToCartModalVisible, quantity, addToCartLoading } = this.state;
 
     return (
-      <>
+      <div className="bg-light">
         <NavBar itemCount={this.state.items.length} />
         <main role="main">
           <Jumbotron
@@ -187,7 +187,7 @@ class Smartphones extends Component {
             />
           </div>
         </Modal>
-      </>
+      </div>
     );
   }
 }
