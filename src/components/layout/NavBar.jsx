@@ -18,10 +18,6 @@ const NavBar = ({ itemCount, ...props }) => {
       });
   };
 
-  const handleLogoutFailure = (response) => {
-    alert("Failed to log out");
-  };
-
   return (
     <nav className="site-header sticky-top py-1">
       <div className="container d-flex flex-column flex-md-row justify-content-between">

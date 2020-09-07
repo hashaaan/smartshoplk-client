@@ -39,10 +39,10 @@ export default {
     /**
      * GET cart items
      */
-    async getCartItems() {
+    getCartItems() {
       return new Promise(async (resolve, reject) => {
         if (localStorage.access_token) {
-          await axios
+          axios
             .get(`${process.env.REACT_APP_API_URL}cart`, {
               headers: {
                 Authorization: localStorage.access_token,

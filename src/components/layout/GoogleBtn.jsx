@@ -7,21 +7,31 @@ const CLIENT_ID = "710824792703-lh7q8iob2k9n192kokfdh5k2lnqlephn";
 
 class GoogleBtn extends Component {
   login = (response) => {
-    const { googleLogin } = this.props;
+    const { loginWithGoogle, getCartItems } = this.props;
 
-    if (response.accessToken) {
-      googleLogin(response)
-        .then((res) => {
-          console.log("res", res);
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
+    if (response && response.profileObj) {
+      let userObj = {
+        username: response.profileObj.name,
+        password: "",
+        email: response.profileObj.email,
+      };
+
+      if (response.accessToken) {
+        loginWithGoogle(userObj)
+          .then((res) => {
+            if (res.success) {
+              getCartItems();
+            }
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
+      }
     }
   };
 
   handleLoginFailure = (response) => {
-    alert("Failed to log in");
+    console.log("Failed to signin with google");
   };
 
   render() {
@@ -34,6 +44,7 @@ class GoogleBtn extends Component {
           scope={"profile email openid"}
           cookiePolicy={"single_host_origin"}
           responseType="code,token"
+          isSignedIn={false}
         />
       </div>
     );
@@ -46,7 +57,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  googleLogin: dispatch.member.loginWithGoogle,
+  loginWithGoogle: dispatch.member.loginWithGoogle,
+  getCartItems: dispatch.cart.getCartItems,
 });
 
 export default withRouter(
