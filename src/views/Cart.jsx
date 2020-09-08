@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { InputNumber } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +9,7 @@ import { Fade } from "react-awesome-reveal";
 import NavBar from "../components/layout/NavBar";
 import Footer from "../components/layout/Footer";
 import "./Cart.css";
+import axios from "axios";
 
 const calcCartTotal = (items) => {
   let cartTotal = 0;
@@ -39,13 +41,44 @@ class Cart extends Component {
       });
   }
 
+  onChangeQuantity = (quantity, _id) => {
+    this.setState({
+      loading: true,
+    });
+    axios
+      .put(
+        `${process.env.REACT_APP_API_URL}cart/quantity/${_id}`,
+        {
+          qty: quantity,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: localStorage.access_token,
+            "Content-type": "application/json",
+          },
+        }
+      )
+      .then((r) => {
+        this.setState({ loading: false });
+        if (r.status === 201) {
+          const { getCartItems } = this.props;
+          getCartItems();
+        }
+      })
+      .catch((e) => {
+        this.setState({ loading: false });
+        console.log(e);
+      });
+  };
+
   render() {
     const { history, items } = this.props;
 
     console.log(items);
 
     return (
-      <>
+      <div className="bg-light">
         <NavBar itemCount={0} />
         <div className="cart_section mt-5">
           <div className="container-fluid">
@@ -124,7 +157,22 @@ class Cart extends Component {
                                   </figcaption>
                                 </figure>
                               </td>
-                              <td>{item.qty ? item.qty : "Unspecified"}</td>
+                              <td>
+                                {item.qty ? (
+                                  <InputNumber
+                                    min={1}
+                                    max={1000}
+                                    defaultValue={item.qty}
+                                    //value={1} // No need to set value by force
+                                    onChange={(quantity) =>
+                                      this.onChangeQuantity(quantity, item._id)
+                                    }
+                                    disabled={this.state.loading}
+                                  />
+                                ) : (
+                                  "Unspecified"
+                                )}
+                              </td>
                               <td>
                                 <div className="price-wrap">
                                   <var className="price">
@@ -196,6 +244,7 @@ class Cart extends Component {
                       type="button"
                       className="btn btn-info"
                       disabled={items.length > 0 ? false : true}
+                      onClick={() => history.push("/checkout")}
                     >
                       Checkout
                     </button>
@@ -206,7 +255,7 @@ class Cart extends Component {
           </div>
         </div>
         <Footer />
-      </>
+      </div>
     );
   }
 }
