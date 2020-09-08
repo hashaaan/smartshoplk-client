@@ -113,6 +113,37 @@ export default {
       });
     },
 
+    deleteCartItem(_id) {
+      return new Promise(async (resolve, reject) => {
+        return axios
+          .delete(`${process.env.REACT_APP_API_URL}cart/${_id}`, {
+            headers: {
+              Authorization: localStorage.access_token,
+            },
+          })
+          .then((res) => {
+            // console.log(res);
+            if (res.status === 200) {
+              this.getCartItems();
+              resolve({ success: true });
+            }
+            resolve({ success: false });
+          })
+          .catch((err) => {
+            if (err.response) {
+              console.log("Error", err.response);
+              if (err.response.status === 500) {
+                notification["error"]({
+                  message: "Somthing went wrong !",
+                  description: "Try again later ...",
+                });
+              }
+            }
+            reject(err);
+          });
+      });
+    },
+
     clearCart() {
       this.setCartItems([]);
     },
