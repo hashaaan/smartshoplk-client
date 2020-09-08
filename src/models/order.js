@@ -49,7 +49,7 @@ export default {
             .then((res) => {
               console.log("res", res);
               if (res.data) {
-                //this.setOrderItems(res.data.response);
+                this.setOrderItems(res.data);
                 resolve({ success: true });
               }
               resolve({ success: false });
