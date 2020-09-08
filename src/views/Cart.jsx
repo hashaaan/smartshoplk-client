@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { InputNumber } from "antd";
+import { InputNumber, Popconfirm } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +23,8 @@ const calcPrice = (unitPrice, quantity) => {
   let price = unitPrice * quantity;
   return price.toFixed(2);
 };
+
+const deleteText = "Are you sure to delete?";
 
 class Cart extends Component {
   state = {
@@ -70,6 +72,13 @@ class Cart extends Component {
         this.setState({ loading: false });
         console.log(e);
       });
+  };
+
+  handleDelete = (_id) => {
+    const { deleteCartItem } = this.props;
+    deleteCartItem(_id)
+      .then((res) => {})
+      .catch((err) => {});
   };
 
   render() {
@@ -196,12 +205,21 @@ class Cart extends Component {
                                 </div>
                               </td>
                               <td className="text-right">
-                                <button
-                                  className="btn btn-outline-danger"
-                                  title="Remove"
+                                <Popconfirm
+                                  placement="left"
+                                  title={deleteText}
+                                  onConfirm={() => this.handleDelete(item._id)}
+                                  okText="Yes"
+                                  cancelText="No"
                                 >
-                                  <FontAwesomeIcon icon={faTrashAlt} />
-                                </button>
+                                  <button
+                                    className="btn btn-outline-danger"
+                                    title="Remove"
+                                    //onClick={}
+                                  >
+                                    <FontAwesomeIcon icon={faTrashAlt} />
+                                  </button>
+                                </Popconfirm>
                               </td>
                             </tr>
                           ))
@@ -267,6 +285,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getCartItems: dispatch.cart.getCartItems,
+  deleteCartItem: dispatch.cart.deleteCartItem,
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart));
