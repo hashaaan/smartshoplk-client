@@ -16,17 +16,15 @@ class GoogleBtn extends Component {
         email: response.profileObj.email,
       };
 
-      if (response.accessToken) {
-        loginWithGoogle(userObj)
-          .then((res) => {
-            if (res.success) {
-              getCartItems();
-            }
-          })
-          .catch((err) => {
-            console.log("err", err);
-          });
-      }
+      loginWithGoogle(userObj)
+        .then((res) => {
+          if (res.success) {
+            getCartItems();
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
     }
   };
 
