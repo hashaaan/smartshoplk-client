@@ -12,17 +12,6 @@ export default {
    * Reducers
    */
   reducers: {
-    setUserLogin(state, payload) {
-      const { uid, email, emailVerified } = payload;
-
-      return {
-        ...state,
-        uid,
-        email,
-        emailVerified,
-      };
-    },
-
     setUserDetails(state, payload) {
       return {
         ...state,
