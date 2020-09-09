@@ -87,7 +87,6 @@ class Smartphones extends Component {
                       >
                         <img
                           className="card-img-top"
-                          data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
                           alt="Product"
                           style={style.imgStyle}
                           src={smartphone.imgUrl && smartphone.imgUrl}
