@@ -21,6 +21,7 @@ import {
 } from "react-router-dom";
 import axios from "axios";
 import ReactStars from "react-rating-stars-component";
+import {getCurrencies,getRates} from "../utils/apis";
 
 // function getReviewStars(amount) {
 //   for (let i = 1; i <= amount; i++) {
@@ -33,11 +34,41 @@ class ProductView extends React.Component {
     super(props);
     this.state = {
       product: null,
+      currencies:[],
+      newPrice: 0,
+      newCurrency:"",
     };
   }
   componentDidMount() {
     this.fetchProduct(this.props.match.params.id);
+    getCurrencies()
+    .then(res => {
+      if(res!=0){
+        this.setState({
+          currencies: res
+        })   
+      }
+    });
   }
+
+  handleChange(e) {
+    let selectedCurrency = e.target.value;
+    if(this.state.newCurrency!=selectedCurrency){
+      if(selectedCurrency!=this.state.product.currency)
+      {
+        getRates(["LKR",selectedCurrency])
+        .then(res=>{
+          if(res!=0){
+            this.setState({newCurrency: selectedCurrency});
+            let lkrRate = res["LKR"];
+            let newcRate = res[selectedCurrency];
+            this.setState({newPrice :Math.round((this.state.product.price / lkrRate) * newcRate)});
+          }
+        });
+      }
+    }
+  }
+
   fetchProduct = (id) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}smartphones/${id}`)
@@ -46,14 +77,19 @@ class ProductView extends React.Component {
           this.setState({
             product: response.data.response,
           });
-          console.log("product state", this.state);
         }
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   render() {
+    const { currencies } = this.state;
+
+    let currenciesList = Object.keys(currencies).map((k) => {
+      return (
+        <option key={k} value={k}>{k}</option>
+      )
+    }, this);
     return (
       <>
         <NavBar />
@@ -97,9 +133,19 @@ class ProductView extends React.Component {
               <div className="card bg-light mb-3">
                 <div className="card-body">
                   <p className="price">
-                    {this.state.product && this.state.product.currency}.
-                    {this.state.product && this.state.product.price}
+                    {this.state.newPrice==0&&this.state.product && this.state.product.currency}{this.state.newPrice>0&&this.state.product&&this.state.newCurrency}.
+                    {this.state.newPrice==0&&this.state.product && this.state.product.price}{this.state.newPrice>0&&this.state.product&&this.state.newPrice}
                   </p>
+                  <select
+                    className="custom-select d-block w-100"
+                    id="currency"
+                    onChange={this.handleChange.bind(this)} 
+                    value={this.state.value}
+                    clearable={this.state.clearable}o
+                    searchable={this.state.searchable}
+                  >
+                    {currenciesList}
+                  </select>
                   {/* <p className="price_discounted">149.90 $</p> */}
                   <form method="get" action="cart.html">
                     <p>
