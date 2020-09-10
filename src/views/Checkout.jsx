@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import NavBar from "../components/layout/NavBar";
 import Footer from "../components/layout/Footer";
 import "./Checkout.css";
+import {getCountries} from '../utils/apis.js';
 
 const calcCartTotal = (items) => {
   let cartTotal = 0;
@@ -16,6 +17,15 @@ const calcCartTotal = (items) => {
 const currency = "LKR";
 
 class Checkout extends Component {
+  
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //       clearable: true,
+  //       countries: [],
+  //    } 
+  //  }
+  
   state = {
     firstName: "",
     lastName: "",
@@ -27,7 +37,24 @@ class Checkout extends Component {
     state: "",
     zip: "",
     paymentMethod: "",
+    countries : [],
   };
+
+
+  componentDidMount() {
+    getCountries()
+        .then(res => {
+            this.setState({
+                countries: res
+            })
+        })
+   }
+
+   handleChange(selectedOption) {
+    this.setState({selectedOption});
+   }
+
+
 
   onFormSubmit = (e) => {
     e.preventDefault();
@@ -215,6 +242,7 @@ class Checkout extends Component {
                         onChange={(e) =>
                           this.setState({ street: e.target.value })
                         }
+
                       />
                     </div>
 
@@ -241,13 +269,14 @@ class Checkout extends Component {
                           id="country"
                           onChange={(e) =>
                             this.setState({ country: e.target.value })
-                          }
+                          } 
+                          value={this.state.value}
+                          clearable={this.state.clearable}o
+                          searchable={this.state.searchable}
                         >
-                          <option value="">Choose...</option>
-                          <option value="Sri Lanka">Sri Lanka</option>
-                          <option value="United States">United States</option>
-                          <option value="United Kingdom">United Kingdom</option>
+                          {this.state.countries&&this.state.countries.length>0&&this.state.countries.map(country => <option>{country.name}</option>)}
                         </select>
+                         
                       </div>
                       <div className="col-md-4 mb-3">
                         <label htmlFor="state">State</label>
